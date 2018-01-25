@@ -1,18 +1,19 @@
 package com.company;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Czytanie {
 
-    public static void main(String[] args) {
-        String filePath;
+    public static void main(String[] args) throws IOException {
+        String filePath = "dziekanat.txt";
         FileReader fileReader = new FileReader(filePath);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-        String textLine = bufferedReader.readLine();
-        do {
+        String textLine;
+        while ((textLine = bufferedReader.readLine()) != null) {
             System.out.println(textLine);
         }
     }
