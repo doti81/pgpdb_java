@@ -2,7 +2,6 @@ package com.company;
 
 public class Student extends Person {
 
-
     public Student(String imie, String nazwisko, int pesel) {
         Imie = imie;
         Nazwisko = nazwisko;

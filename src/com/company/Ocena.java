@@ -1,8 +1,7 @@
 package com.company;
 
 public class Ocena {
-
-
+    private final int id;
     private final int ocena;
     private final Student student;
     private final Przedmiot przedmiot;
@@ -16,12 +15,17 @@ public class Ocena {
                 '}';
     }
 
-    public Ocena(int ocena, Student student, Przedmiot przedmiot) {
+    public Ocena(int id, int ocena, Student student, Przedmiot przedmiot) {
+        this.id = id;
         this.ocena = ocena;
 
 
         this.student = student;
         this.przedmiot = przedmiot;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getOcena() {

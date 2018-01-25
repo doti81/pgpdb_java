@@ -12,10 +12,18 @@ public class Czytanie {
         FileReader fileReader = new FileReader(filePath);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-        String textLine;
-        while ((textLine = bufferedReader.readLine()) != null) {
-            System.out.println(textLine);
-        }
+        String imie = bufferedReader.readLine();
+        String nazwisko = bufferedReader.readLine();
+        int pesel = Integer.parseInt(bufferedReader.readLine());
+
+        Student student = new Student(imie, nazwisko, pesel);
+        System.out.println(student.toString());
+
+//        String textLine;
+//        while ((textLine = bufferedReader.readLine()) != null) {
+//            System.out.println(textLine);
+//            Student student = new Student()
+//        }
     }
     //new BufferedReader(new FileReader("/path/to/text/file.txt"));
 
