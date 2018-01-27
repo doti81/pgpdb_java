@@ -15,44 +15,12 @@ public class Main {
         List<Student> students = new ArrayList<>();
         List<Ocena> oceny = new ArrayList<>();
 
-        String line;  //odczytywanie
-        while ((line = reader.readLine()) != null) {
-            if (line.equals("# student")) {
-                String imie = reader.readLine();
-                String nazwisko = reader.readLine();
-                int pesel = Integer.parseInt(reader.readLine());
-                Student student = new Student(imie, nazwisko, pesel);
-                students.add(student);
-            } else if (line.equals("# teacher")) {
-                String imie = reader.readLine();
-                String nazwisko = reader.readLine();
-                int pesel = Integer.parseInt(reader.readLine());
-                String stopien = reader.readLine();
-                Teacher teacher = new Teacher(imie, nazwisko, stopien, pesel);
-                teachers.add(teacher);
-            } else if (line.equals("#przedmiot")) {
-                int id = Integer.parseInt(reader.readLine());
-                String nazwa = reader.readLine();
-                int ects = Integer.parseInt(reader.readLine());
-                Przedmiot przedmiot = new Przedmiot(id, nazwa, ects);
-                przedmioty.add(przedmiot);
-
-            } else if (line.equals("# ocena")) {
-                int id= Integer.parseInt(reader.readLine());
-                int ocena =Integer.parseInt(reader.readLine());
-                int nr_studenta= Integer.parseInt(reader.readLine());
-                int nr_przedmiotu =Integer.parseInt(reader.readLine());
-                Student student = students.get(nr_studenta);
-                Przedmiot przedmiot = przedmioty.get(nr_przedmiotu);
-                Ocena ocena1= new Ocena(id,ocena,student,przedmiot);
-                oceny.add(ocena1);
-            }
-
-        }
+        Reader.read(reader, teachers, przedmioty, students, oceny);
 
         System.out.println("Twój Dziekanat");
 
         Scanner scanner = new Scanner(System.in);
+        label:
         while (true) {
             System.out.println("=====================");
             System.out.println("Wybierz jedną z opcji");
@@ -69,153 +37,116 @@ public class Main {
 
             System.out.print("Wybierz opcję: ");
             int opcja = scanner.nextInt();
-            if (opcja == 1) {
-                System.out.println("++++++ Lista nauczycieli +++++");
+            switch (opcja) {
+                case 1:
+                    System.out.println("++++++ Lista nauczycieli +++++");
 
-                for (Teacher teacher : teachers) {
-                    System.out.println(teacher.toString());
+                    for (Teacher teacher : teachers) {
+                        System.out.println(teacher.toString());
+                    }
+                    break;
+                case 2:
+                    System.out.println("+++++ Lista studentów +++++");
+                    for (Student student : students) {
+                        System.out.println(student.toString());
+                    }
+                    break;
+                case 3:
+                    System.out.println("+++++ Lista przedmiotów ++++++");
+
+                    for (Przedmiot przedmiot : przedmioty) {
+                        System.out.println(przedmiot.toString());
+                    }
+
+                    break;
+                case 7:
+                    System.out.println("+++++Lista Ocen+++++");
+                    for (Ocena ocena : oceny) {      //po prawej stronie od dwukropka jest zmienna typu Lista , po lweje stronie
+                        //od dwukropka mowi ze :wez kazdy elemnt z typu lista o nazwie oceny i zapisz go w zmiennej typu Ocena
+                        //o nazwie ocena i uruchom znia kod który znajduje sie miedzy klamrami
+                        System.out.println(ocena.toString());
+                    }
+
+
+                    break;
+                case 4: {
+                    System.out.println("+++++++ Dodawanie nauczyciela ++++++");
+
+                    System.out.print("Podaj imie: ");
+                    String imie = scanner.next();
+                    System.out.print("Podaj nazwisko: ");
+                    String nazwisko = scanner.next();
+                    System.out.print("Podaj stopien: ");
+                    String stopien = scanner.next();
+                    System.out.print("Podaj pesel: ");
+                    int pesel = scanner.nextInt();
+
+                    Teacher teacher = new Teacher(imie, nazwisko, stopien, pesel);
+                    teachers.add(teacher);
+                    System.out.println("Dodano nauczyciela: " + teacher.toString());
+                    break;
                 }
-            } else if (opcja == 2) {
-                System.out.println("+++++ Lista studentów +++++");
-                for (Student student : students) {
-                    System.out.println(student.toString());
+                case 5: {
+                    System.out.println("++++ Dodawanie przedmiotu ++++");
+
+                    System.out.print("Podaj nazwe: ");
+                    String nazwa = scanner.next();
+                    System.out.print("Podaj ECTS: ");
+                    int ects = scanner.nextInt();
+
+
+                    Przedmiot przedmiot = new Przedmiot(przedmioty.size(), nazwa, ects);
+                    przedmioty.add(przedmiot);
+                    System.out.println("Dodano przedmiot: " + przedmiot.toString());
+
+                    break;
                 }
-            } else if (opcja == 3) {
-                System.out.println("+++++ Lista przedmiotów ++++++");
+                case 6: {
 
-                for (Przedmiot przedmiot : przedmioty) {
-                    System.out.println(przedmiot.toString());
+                    System.out.println("= Dodawanie studenta =");
+
+                    System.out.print("Podaj imie: ");
+                    String imie = scanner.next();
+                    System.out.print("Podaj nazwisko: ");
+                    String nazwisko = scanner.next();
+                    System.out.print("Podaj pesel: ");
+                    int pesel = scanner.nextInt();
+
+                    Student student = new Student(imie, nazwisko, pesel);
+                    students.add(student);
+                    System.out.println("Dodano studenta: " + student.toString());
+
+
+                    break;
                 }
+                case 8: {
+                    System.out.println("=Dodawanie ocen=");
 
-            } else if (opcja == 7) {
-                System.out.println("+++++Lista Ocen+++++");
-                for (Ocena ocena : oceny) {      //po prawej stronie od dwukropka jest zmienna typu Lista , po lweje stronie
-                    //od dwukropka mowi ze :wez kazdy elemnt z typu lista o nazwie oceny i zapisz go w zmiennej typu Ocena
-                    //o nazwie ocena i uruchom znia kod który znajduje sie miedzy klamrami
-                    System.out.println(ocena.toString());
+                    System.out.print("Podaj numer studenta: ");
+                    int nr_studenta = scanner.nextInt();
+                    System.out.print("Podaj numer przedmiotu ");
+                    int nr_przedmiotu = scanner.nextInt();
+                    System.out.print("Podaj ocenę");
+                    int ocena1 = scanner.nextInt();
+
+                    Student student = students.get(nr_studenta);
+                    Przedmiot przedmiot = przedmioty.get(nr_przedmiotu);
+
+
+                    Ocena ocena = new Ocena(oceny.size(), ocena1, student, przedmiot);
+                    oceny.add(ocena);
+                    System.out.println("Dodano ocenę" + ocena.toString());
+                    break;
                 }
-
-
-            } else if (opcja == 4) {
-                System.out.println("+++++++ Dodawanie nauczyciela ++++++");
-
-                System.out.print("Podaj imie: ");
-                String imie = scanner.next();
-                System.out.print("Podaj nazwisko: ");
-                String nazwisko = scanner.next();
-                System.out.print("Podaj stopien: ");
-                String stopien = scanner.next();
-                System.out.print("Podaj pesel: ");
-                int pesel = scanner.nextInt();
-
-                Teacher teacher = new Teacher(imie, nazwisko, stopien, pesel);
-                teachers.add(teacher);
-                System.out.println("Dodano nauczyciela: " + teacher.toString());
-            } else if (opcja == 5) {
-                System.out.println("++++ Dodawanie przedmiotu ++++");
-
-                System.out.print("Podaj nazwe: ");
-                String nazwa = scanner.next();
-                System.out.print("Podaj ECTS: ");
-                int ects = scanner.nextInt();
-
-
-                Przedmiot przedmiot = new Przedmiot(przedmioty.size(), nazwa, ects);
-                przedmioty.add(przedmiot);
-                System.out.println("Dodano przedmiot: " + przedmiot.toString());
-
-            } else if (opcja == 6) {
-
-                System.out.println("= Dodawanie studenta =");
-
-                System.out.print("Podaj imie: ");
-                String imie = scanner.next();
-                System.out.print("Podaj nazwisko: ");
-                String nazwisko = scanner.next();
-                System.out.print("Podaj pesel: ");
-                int pesel = scanner.nextInt();
-
-                Student student = new Student(imie, nazwisko, pesel);
-                students.add(student);
-                System.out.println("Dodano studenta: " + student.toString());
-
-
-            } else if (opcja == 8) {
-                System.out.println("=Dodawanie ocen=");
-
-                System.out.print("Podaj numer studenta: ");
-                int nr_studenta = scanner.nextInt();
-                System.out.print("Podaj numer przedmiotu ");
-                int nr_przedmiotu = scanner.nextInt();
-                System.out.print("Podaj ocenę");
-                int ocena1 = scanner.nextInt();
-
-                Student student = students.get(nr_studenta);
-                Przedmiot przedmiot = przedmioty.get(nr_przedmiotu);
-
-
-                Ocena ocena = new Ocena(oceny.size(), ocena1, student, przedmiot);
-                oceny.add(ocena);
-                System.out.println("Dodano ocenę" + ocena.toString());
-            } else if (opcja == 9) {
-                System.out.println("Zapisuję do pliku");
-
-                BufferedWriter writer = new BufferedWriter(new FileWriter("dziekanat.txt", false));
-
-                for (Student student : students) {
-                    writer.append("# student");
-                    writer.newLine();
-                    writer.append(student.getImie());
-                    writer.newLine();
-                    writer.append(student.getNazwisko());
-                    writer.newLine();
-                    writer.append(student.getPesel() + "");
-                    writer.newLine();
-                }
-
-                for (Teacher teacher : teachers) {
-                    writer.append("# teacher");
-                    writer.newLine();
-                    writer.append(teacher.getImie());
-                    writer.newLine();
-                    writer.append(teacher.getNazwisko());
-                    writer.newLine();
-                    writer.append(teacher.getPesel() + "");
-                    writer.newLine();
-                    writer.append(teacher.stopien_naukowy);
-                    writer.newLine();
-                }
-                for (Przedmiot przedmiot : przedmioty) {
-                    writer.append("#przedmiot");
-                    writer.newLine();
-                    writer.append(przedmiot.getId() + "");
-                    writer.newLine();
-                    writer.append(przedmiot.getNazwa());
-                    writer.newLine();
-                    writer.append(przedmiot.getEcts() + "");
-                    writer.newLine();
-
-                }
-                for (Ocena ocena:oceny){
-                    writer.append("# ocena");
-                    writer.newLine();
-                    writer.append(ocena.getId() + "");
-                    writer.newLine();
-                    writer.append(ocena.getOcena()+ "");
-                    writer.newLine();
-                    writer.append(students.indexOf(ocena.getStudent())+"");//pobranie indeksu
-                    writer.newLine();
-                    writer.append(przedmioty.indexOf(ocena.getPrzedmiot()) + "");
-                    writer.newLine();
-                }
-
-                writer.flush();
-                writer.close();
-            } else if (opcja == 0) {
-                System.out.println("Koniec programu");
-                break;
-            } else {
-                System.out.println("wybrałes zły numer");
+                case 9:
+                    Writer.write(teachers, przedmioty, students, oceny);
+                    break;
+                case 0:
+                    System.out.println("Koniec programu");
+                    break label;
+                default:
+                    System.out.println("wybrałes zły numer");
+                    break;
             }
         }
 
