@@ -1,1 +1,45 @@
-dupa
+# student
+witold
+malocha
+1000
+# student
+Aleksander
+Wisniewski
+808080
+# teacher
+witold
+waldocha
+1000
+doktor
+# teacher
+henryk
+stochosa
+400
+docent
+# teacher
+anna
+waldowska
+56455
+mgr
+#przedmiot
+2
+wf
+40
+#przedmiot
+1
+nauka
+56
+#przedmiot
+2
+jajaja
+50
+# ocena
+4
+3
+0
+0
+# ocena
+1
+5
+1
+2
